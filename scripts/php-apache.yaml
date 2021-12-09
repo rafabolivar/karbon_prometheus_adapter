@@ -21,7 +21,7 @@ spec:
           limits:
             cpu: 200m
           requests:
-            cpu: 100m
+            cpu: 50m
 ---
 apiVersion: v1
 kind: Service
@@ -50,4 +50,4 @@ spec:
   - type: Pods
     pods:
       metricName: cpu_usage
-      targetAverageValue: 180
+      targetAverageValue: 100
