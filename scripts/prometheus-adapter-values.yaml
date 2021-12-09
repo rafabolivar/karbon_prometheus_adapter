@@ -9,8 +9,8 @@ rules:
   default: true
   resource: 
     cpu:
-      containerQuery: sum(rate(container_cpu_usage_seconds_total{<<.LabelMatchers>>, container!=""}[1m])) by (<<.GroupBy>>)
-      nodeQuery: sum(rate(container_cpu_usage_seconds_total{<<.LabelMatchers>>, id='/'}[1m])) by (<<.GroupBy>>)
+      containerQuery: sum(rate(container_cpu_usage_seconds_total{<<.LabelMatchers>>, container!=""}[5m])) by (<<.GroupBy>>)
+      nodeQuery: sum(rate(container_cpu_usage_seconds_total{<<.LabelMatchers>>, id='/'}[5m])) by (<<.GroupBy>>)
       resources:
         overrides:
           node:
@@ -32,4 +32,12 @@ rules:
           pod:
             resource: pod
       containerLabel: container
-    window: 1m
+    window: 5m
+  prometheusSpec:
+    ruleNamespaceSelector:
+      matchNames:
+      - kube-system
+      - ntnx-system
+      - default
+      - prometheus-adapter
+      - karbon-demo-hpa
