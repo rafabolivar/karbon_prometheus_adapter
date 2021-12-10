@@ -33,12 +33,3 @@ rules:
             resource: pod
       containerLabel: container
     window: 5m
-- seriesQuery: 'http_requests_total{kubernetes_namespace!="",kubernetes_pod_name!=""}'
-  resources:
-    overrides:
-      kubernetes_namespace: {resource: "namespace"}
-      kubernetes_pod_name: {resource: "pod"}
-  name:
-    matches: "^(.*)_total"
-    as: "${1}_per_second"
-  metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
