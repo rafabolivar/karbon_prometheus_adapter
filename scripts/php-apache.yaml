@@ -19,9 +19,9 @@ spec:
         - containerPort: 80
         resources:
           limits:
-            cpu: 200m
+            cpu: 150m
           requests:
-            cpu: 50m
+            cpu: 40m
 ---
 apiVersion: v1
 kind: Service
@@ -41,13 +41,13 @@ metadata:
   name: php-apache
 spec:
   scaleTargetRef:
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
     name: php-apache
   minReplicas: 1
   maxReplicas: 10
   metrics:
-  - type: Pods
-    pods:
-      metricName: cpu_usage
-      targetAverageValue: 100
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 50
